@@ -13,6 +13,7 @@ public class Main {
     public static void main (String[] args) throws FileNotFoundException {
         int[] singleTemperaturesPerLine = getHowManySinglesTemperaturesPerLine();
         printArray1d(singleTemperaturesPerLine);
+        printThermalHoles();
         saveLinesWithoutSingleTemperatures(singleTemperaturesPerLine);
     }
 
@@ -20,36 +21,55 @@ public class Main {
     public static int countSigleTemperatures(int[] array) {
         int count = 0;
         for (int i = 0; i < array.length; i++) {
-            boolean repeated = false;
-            for (int j = 0; j < array.length; j++) {
-                if (j != i && array[i] == array[j]) {
-                    repeated = true;
-                    break;
-                }
-            }
-            if (!repeated) {
+            if (!verifyRepeatedInLine(array, i)) {
                 count++;
             }
         }
         return count;
+    }
+    public static boolean verifyRepeatedInLine(int[] array, int i) {
+        boolean repeated = false;
+        for (int j = 0; j < array.length; j++) {
+            if (j != i && array[i] == array[j]) {
+                repeated = true;
+                break;
+            }
+        }
+        return repeated;
     }
 
     //2
     public static int[] getHowManySinglesTemperaturesPerLine() {
         int[] resultado = new int[arrayTemperatures.length];
         for (int linha = 0; linha < arrayTemperatures.length; linha++) {
-            int[] array1d = new int[arrayTemperatures[linha].length];
-            for (int j = 0; j < arrayTemperatures[linha].length; j++) {
-                array1d[j] = arrayTemperatures[linha][j];
-            }
+            int[] array1d = transformLineToArray1d(linha);
             resultado[linha] = countSigleTemperatures(array1d);
         }
         return resultado;
     }
 
+    public static int[] transformLineToArray1d(int linha) {
+        int[] array1d = new int[arrayTemperatures[linha].length];
+        for (int j = 0; j < arrayTemperatures[linha].length; j++) {
+            array1d[j] = arrayTemperatures[linha][j];
+        }
+        return array1d;
+    }
     //3
     public static void printThermalHoles() {
-
+        boolean thereIsThermalHoles = false;
+        for (int i = 1; i < arrayTemperatures.length - 1; i++) {
+            for (int j = 1; j < arrayTemperatures[i].length - 1; j++) {
+                if (arrayTemperatures[i][j] < arrayTemperatures[i - 1][j] && arrayTemperatures[i][j] < arrayTemperatures[i + 1][j]
+                        && arrayTemperatures[i][j] < arrayTemperatures[i][j - 1] && arrayTemperatures[i][j] < arrayTemperatures[i][j + 1]) {
+                    thereIsThermalHoles = true;
+                    System.out.printf("Thermal hole : (%d,%d)%n", i, j);
+                }
+            }
+        }
+        if (!thereIsThermalHoles) {
+            System.out.println("No Thermal holes");
+        }
     }
 
     //4
@@ -67,7 +87,7 @@ public class Main {
         printWriter.close();
     }
 
-
+    //extra
     public static void printArray1d(int[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i] + " ");
