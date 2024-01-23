@@ -54,7 +54,7 @@ public class Main {
 
     //4
     public static void saveLinesWithoutSingleTemperatures (int[] singleTemperaturesPerLine) throws FileNotFoundException {
-        File file = new File("LinesWithoutSingleTemperatures.txt");
+        File file = new File("linesWithoutSingleTemperatures.txt");
         PrintWriter printWriter = new PrintWriter(file);
         for (int i = 0; i < singleTemperaturesPerLine.length; i++) {
             if (singleTemperaturesPerLine[i] == 0) {
