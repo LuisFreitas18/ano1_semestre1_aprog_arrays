@@ -1,4 +1,6 @@
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class Main {
     public static final int[][] arrayTemperatures = {
@@ -8,9 +10,10 @@ public class Main {
             {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
     };
 
-    public static void main (String[] args){
+    public static void main (String[] args) throws FileNotFoundException {
         int[] singleTemperaturesPerLine = getHowManySinglesTemperaturesPerLine();
         printArray1d(singleTemperaturesPerLine);
+        saveLinesWithoutSingleTemperatures(singleTemperaturesPerLine);
     }
 
     //1
@@ -50,8 +53,18 @@ public class Main {
     }
 
     //4
-    public static void saveLinesWithoutSingleTemperatures () {
-
+    public static void saveLinesWithoutSingleTemperatures (int[] singleTemperaturesPerLine) throws FileNotFoundException {
+        File file = new File("LinesWithoutSingleTemperatures.txt");
+        PrintWriter printWriter = new PrintWriter(file);
+        for (int i = 0; i < singleTemperaturesPerLine.length; i++) {
+            if (singleTemperaturesPerLine[i] == 0) {
+                for (int j = 0; j < arrayTemperatures[i].length; j++) {
+                    printWriter.print(arrayTemperatures[i][j] + " ");
+                }
+                printWriter.println();
+            }
+        }
+        printWriter.close();
     }
 
 
