@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class Main {
+public class Normal2023 {
     public static final int[][] arrayTemperatures = {
             {3, 5, 9, 3, 4, 5, 6, 9, 9, 7},
             {-8, 1, -8, 1, 5, 5, 5, 5, 5, 1},
@@ -10,7 +10,7 @@ public class Main {
             {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
     };
 
-    public static void main (String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException {
         int[] singleTemperaturesPerLine = getHowManySinglesTemperaturesPerLine();
         printArray1d(singleTemperaturesPerLine);
         printThermalHoles();
@@ -74,7 +74,7 @@ public class Main {
 
     //4
     public static void saveLinesWithoutSingleTemperatures (int[] singleTemperaturesPerLine) throws FileNotFoundException {
-        File file = new File("linesWithoutSingleTemperatures.txt");
+        File file = new File("Normal2023Output/linesWithoutSingleTemperatures.txt");
         PrintWriter printWriter = new PrintWriter(file);
         for (int i = 0; i < singleTemperaturesPerLine.length; i++) {
             if (singleTemperaturesPerLine[i] == 0) {
