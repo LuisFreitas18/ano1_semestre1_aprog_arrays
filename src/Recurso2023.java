@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -13,6 +12,7 @@ public class Recurso2023 {
         System.out.println(getAirstripBusiest(airstrips));
         int[] allAirstripFlights = getAllAirstripFlights(airstrips);
         printArray1D(allAirstripFlights);
+        writeStatistics(hours, airstrips);
     }
 
     //1
@@ -28,11 +28,12 @@ public class Recurso2023 {
         in = new Scanner(file);
 
         for (int i = 0; i < countFlights; i++) {
-            if (in.hasNextInt()) {
-                hours[i] = (in.nextInt()) + "h";
-            }
-            for (int j = 0; j < MAX_COLUMNS && in.hasNextInt(); j++) {
-                airstrips[i][j] = in.nextInt();
+            String line = in.nextLine();
+            String[] lineSplitted = line.split(",");
+            hours[i] = lineSplitted[0];
+            System.out.println();
+            for (int j = 1; j < MAX_COLUMNS; j++) {
+                airstrips[i][j] = Integer.parseInt(lineSplitted[j]);
             }
         }
 
@@ -55,18 +56,22 @@ public class Recurso2023 {
 
     //3
     public static int[] getAllAirstripFlights(int[][] airstrips) {
-        int[] arrTotalPerAirstrip = new int[3];
+        int[] arrTotalPerAirstrip = new int[MAX_COLUMNS];
         for (int i = 0; i < airstrips.length; i++) {
             int moviment = airstrips[i][1] + airstrips[i][2];
             switch (airstrips[i][0]) {
                 case 1 :
                     arrTotalPerAirstrip[0] = moviment;
+                    break;
                 case 2 :
                     arrTotalPerAirstrip[1] = moviment;
+                    break;
                 case 3 :
                     arrTotalPerAirstrip[2] = moviment;
+                    break;
                 default :
                     System.out.println("Error, invalid airstrip");
+                    break;
             }
         }
 
@@ -80,5 +85,28 @@ public class Recurso2023 {
     }
 
     //4
+    public static void writeStatistics(String[] hours, int[][] airstrips) {
+        double totalChegadas, totalPartidas, numLinhas;
+        totalChegadas = totalPartidas = numLinhas = 0;
 
+        for (int i = 0; i < airstrips.length; i++) {
+            totalChegadas += airstrips[i][1];
+            totalPartidas += airstrips[i][2];
+        }
+        double mediaChegadas = totalChegadas / airstrips.length;
+        double mediaPartidas = totalPartidas / airstrips.length;
+        System.out.printf("Média de chegadas: %.2f e de partidas: %.2f%n", mediaChegadas, mediaPartidas);
+
+        int horaAbaixoMedia = -1;
+        for (int i = 0; i < airstrips.length; i++) {
+            if (airstrips[i][1] < mediaChegadas && airstrips[i][2] < mediaPartidas) {
+                horaAbaixoMedia = i;
+            }
+        }
+        if (horaAbaixoMedia != -1) {
+            System.out.println(hours[horaAbaixoMedia] + " pista " + airstrips[horaAbaixoMedia][0]);
+        } else {
+            System.out.println("Nao tem hora abaixo da media");
+        }
+    }
 }
