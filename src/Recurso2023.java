@@ -86,8 +86,8 @@ public class Recurso2023 {
 
     //4
     public static void writeStatistics(String[] hours, int[][] airstrips) {
-        double totalChegadas, totalPartidas, numLinhas;
-        totalChegadas = totalPartidas = numLinhas = 0;
+        double totalChegadas, totalPartidas;
+        totalChegadas = totalPartidas = 0;
 
         for (int i = 0; i < airstrips.length; i++) {
             totalChegadas += airstrips[i][1];
