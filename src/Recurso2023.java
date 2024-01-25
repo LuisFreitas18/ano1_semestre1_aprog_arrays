@@ -11,7 +11,8 @@ public class Recurso2023 {
         int[][] airstrips = new int[MAX_LINES][MAX_COLUMNS];
         readFlightsFromFile(fileFlights, hours, airstrips);
         System.out.println(getAirstripBusiest(airstrips));
-        printArray1D(getAllAirstripFlights(airstrips));
+        int[] allAirstripFlights = getAllAirstripFlights(airstrips);
+        printArray1D(allAirstripFlights);
     }
 
     //1
